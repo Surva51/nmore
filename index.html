@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMore AI Chat</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>NMore AI Chat</h1>
+            <p class="subtitle">Connect with AI using the NMore API</p>
+            <div class="toolbar">
+                <button id="new-chat-btn" class="btn">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    New Chat
+                </button>
+                <button id="clear-btn" class="btn">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear Chat
+                </button>
+                <button id="export-btn" class="btn">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Export Chat
+                </button>
+                <div class="model-selector">
+                    <label for="model-select">Model:</label>
+                    <select id="model-select">
+                        <option value="6" selected>Deepseek-R1</option>
+                        <option value="1">Gpt4o</option>
+                    </select>
+                </div>
+                <div class="thinking-toggle">
+                    <span class="toggle-label">Show Thinking:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="thinking-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="thinking-toggle">
+                    <span class="toggle-label">Web Search:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="websearch-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <div class="message message-ai">
+                    <div class="message-header message-header-ai">AI Assistant</div>
+                    <div class="message-content">👋 Hello! I'm an AI assistant. How can I help you today?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+            </div>
+            <button id="send-btn" class="btn btn-primary">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                Send
+            </button>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
