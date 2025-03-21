@@ -97,11 +97,29 @@ h1 {
 
 .toolbar {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center items horizontally by default */
     gap: 0.75rem;
     margin-top: 0.5rem;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens, but we'll do more */
+    align-items: center; /* Vertically align items */
 }
+
+/* Style for the toolbar items (select, toggles) */
+.toolbar-item {
+    display: flex; /* Use flexbox for layout within each item */
+    align-items: center; /* Vertically align label and control */
+    gap: 0.5rem; /* Space between label and control */
+    margin-bottom: 0.5rem; /* Add some bottom margin */
+}
+
+/* Style for the labels in the toolbar */
+.toolbar-item label {
+    font-size: 0.875rem;
+    color: var(--light-text);
+    white-space: nowrap; /* keep the labels from getting split in the midle of words */
+}
+
+
 
 .btn {
     background-color: var(--card-bg);
@@ -343,10 +361,10 @@ h1 {
     flex-shrink: 0;
 }
 
+/* Model selector specific adjustments */
 .model-selector {
-    display: flex;
-    align-items: center;
-    margin-left: 1rem;
+    /* Remove margin-left; it's handled by .toolbar-item now */
+    /* margin-left: 1rem;  REMOVE THIS */
 }
 
 select {
@@ -357,6 +375,7 @@ select {
     padding: 0.5rem;
     font-size: 0.875rem;
     outline: none;
+    max-width: 100%; /* Ensure select doesn't overflow its container */
 }
 
 .thinking-toggle {
@@ -364,7 +383,7 @@ select {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    margin-left: 1rem;
+
 }
 
 .toggle-label {
@@ -502,4 +521,59 @@ code {
 
 .search-result a:hover {
     text-decoration: underline;
+}
+
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column; /* Stack items vertically on mobile */
+        align-items: stretch; /* Stretch items to fill width */
+    }
+
+    .toolbar-item {
+        width: 100%; /* Occupy full width*/
+        justify-content: space-between; /* Push label to left, control to right */
+
+    }
+
+    .model-selector, .thinking-toggle {
+        /*margin-left: 0; -- already set*/
+        justify-content: space-between; /* distribute space well*/
+    }
+
+    .model-selector select{
+        max-width: 50%; /* limit the size on mobile, allows it to wrap.*/
+    }
+
+    .message {
+        max-width: 90%;
+    }
+        /* Optionally make toggle switches smaller */
+    .toggle-switch {
+        width: 36px; /* Slightly smaller */
+        height: 18px; /* Maintain aspect ratio */
+    }
+
+    .toggle-slider:before {
+        height: 14px;
+        width: 14px;
+        left: 2px;
+        bottom: 2px;
+    }
+
+    input:checked + .toggle-slider:before {
+        transform: translateX(18px); /* Adjust for smaller size */
+    }
+}
+
+/* For the larger breakpoint, we ensure correct wrapping */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .toolbar{
+        justify-content: space-between;
+    }
+
+    .toolbar-item{
+        flex-basis: 48%; /* allow 2 element per row. */
+    }
 }
