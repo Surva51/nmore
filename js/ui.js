@@ -11,7 +11,7 @@ class ChatUI {
         this.modelSelect = document.getElementById('model-select');
         this.thinkingToggle = document.getElementById('thinking-toggle');
         this.websearchToggle = document.getElementById('websearch-toggle');
-        
+
         // Auto-resize textarea
         this.userInput.addEventListener('input', () => {
             this.userInput.style.height = 'auto';
@@ -22,28 +22,28 @@ class ChatUI {
     // Add a message to the chat
     addMessage(role, content) {
         const message = document.createElement('div');
-        
+
         if (role === 'system') {
             message.className = 'message message-system';
             message.innerHTML = content;
         } else {
             message.className = `message message-${role}`;
-            
+
             const header = document.createElement('div');
             header.className = `message-header message-header-${role}`;
             header.textContent = role === 'user' ? 'You' : 'AI Assistant';
-            
+
             const messageContent = document.createElement('div');
             messageContent.className = 'message-content';
             messageContent.innerHTML = this.formatMessage(content);
-            
+
             message.appendChild(header);
             message.appendChild(messageContent);
         }
-        
+
         this.chatMessages.appendChild(message);
         this.scrollToBottom();
-        
+
         return message;
     }
 
@@ -63,12 +63,10 @@ class ChatUI {
     }
 
     // Add thinking process box
-   // Update the addThinkingBox method to better handle the content
-// Update the addThinkingBox method to better handle the content
-addThinkingBox(thinkingContent, thinkingCost) {
-    const thinkingBox = document.createElement('div');
-    thinkingBox.className = 'message message-ai has-thinking-box'; // Added has-thinking-box class
-    thinkingBox.innerHTML = `
+    addThinkingBox(thinkingContent, thinkingCost) {
+        const thinkingBox = document.createElement('div');
+        thinkingBox.className = 'message message-ai has-thinking-box'; // Added has-thinking-box class
+        thinkingBox.innerHTML = `
         <div class="message-header message-header-ai">AI Assistant</div>
         <div class="thinking-box">
             <div class="thinking-header">
@@ -81,15 +79,15 @@ addThinkingBox(thinkingContent, thinkingCost) {
             AI is responding<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
         </div>
     `;
-    this.chatMessages.appendChild(thinkingBox);
-    this.scrollToBottom();
-    return thinkingBox;
-}
+        this.chatMessages.appendChild(thinkingBox);
+        this.scrollToBottom();
+        return thinkingBox;
+    }
 
     // Format message content (convert markdown-like syntax to HTML)
     formatMessage(text) {
         if (!text) return '';
-        
+
         // Configure marked options
         marked.setOptions({
             breaks: true,        // Convert line breaks to <br>
@@ -98,13 +96,13 @@ addThinkingBox(thinkingContent, thinkingCost) {
             mangle: false,       // Don't mangle email addresses
             sanitize: false      // Don't sanitize (we're using DOMPurify)
         });
-        
+
         // Optional: Add DOMPurify for security (recommended)
         // You'll need to also add: <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
         if (typeof DOMPurify !== 'undefined') {
             return DOMPurify.sanitize(marked.parse(text));
         }
-        
+
         return marked.parse(text);
     }
 
@@ -113,7 +111,7 @@ addThinkingBox(thinkingContent, thinkingCost) {
         while (this.chatMessages.firstChild) {
             this.chatMessages.removeChild(this.chatMessages.firstChild);
         }
-        
+
         // Add welcome message
         this.addMessage('ai', '👋 Hello! I\'m an AI assistant. How can I help you today?');
     }
@@ -127,11 +125,15 @@ addThinkingBox(thinkingContent, thinkingCost) {
     setLoading(isLoading) {
         this.userInput.disabled = isLoading;
         this.sendBtn.disabled = isLoading;
-        
+
         if (!isLoading) {
-            this.userInput.focus();
+            // Check if it's a mobile device before focusing
+            if (!this.isMobileDevice()) {
+                this.userInput.focus();
+            }
         }
     }
+
 
     // Export chat history
     exportChat(history, threadId) {
@@ -139,17 +141,17 @@ addThinkingBox(thinkingContent, thinkingCost) {
             alert("No conversation to export.");
             return;
         }
-        
+
         // Format the chat for export
         let exportText = "# NMore AI Chat Export\n\n";
         exportText += `Date: ${new Date().toLocaleString()}\n`;
         exportText += `Thread ID: ${threadId}\n\n`;
-        
+
         history.forEach(message => {
             exportText += `## ${message.role === 'user' ? 'You' : 'AI'}\n\n`;
             exportText += `${message.content}\n\n`;
         });
-        
+
         // Create a download link
         const blob = new Blob([exportText], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
@@ -160,6 +162,10 @@ addThinkingBox(thinkingContent, thinkingCost) {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+    // Helper function to detect mobile devices
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 }
 
