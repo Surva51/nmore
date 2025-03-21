@@ -98,11 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Process streaming answer response
     // Process streaming answer response
+// Process streaming answer response
 async function processAnswer(responseId) {
     try {
         // Variables for response processing
         let fullAnswer = '';
         let thinkingContent = '';
+        let searchResults = []; // Array to store search results
         let answerStarted = false;
         
         // Create a new message for the AI response right away
@@ -139,15 +141,20 @@ async function processAnswer(responseId) {
                     const jsonData = JSON.parse(data);
                     
                     // Handle different message types
-                    if (jsonData.type === 'reason') {
+                    if (jsonData.type === "news") {
+                        // Store search result
+                        searchResults.push({
+                            content: jsonData.content,
+                            source: jsonData.source
+                        });
+                        console.log('Search result:', jsonData.content, jsonData.source);
+                    } else if (jsonData.type === 'reason') {
                         // Collect thinking content
                         if (jsonData.content) {
-                            console.log('Thinking token:', jsonData.content);
                             thinkingContent += jsonData.content;
                             
                             // Update the message with thinking content if showing is enabled
                             if (showThinking) {
-                                // Update the message with both thinking and answer content
                                 updateMessageContent();
                             }
                         }
@@ -180,6 +187,19 @@ async function processAnswer(responseId) {
         // Helper function to update the message content
         function updateMessageContent() {
             let content = '';
+            
+            // Add search results if available
+            if (webSearchEnabled && searchResults.length > 0) {
+                content += '<div class="search-results-container">';
+                content += '<div class="search-results-header">Web Search Results:</div>';
+                content += '<div class="search-results">';
+                searchResults.forEach(result => {
+                    content += `<div class="search-result">
+                        <a href="${result.content}" target="_blank">${result.source}</a>
+                    </div>`;
+                });
+                content += '</div></div>';
+            }
             
             // Add thinking content if available and showing is enabled
             if (showThinking && thinkingContent) {

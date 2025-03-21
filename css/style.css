@@ -458,3 +458,48 @@ code {
         background-color: rgba(255, 255, 255, 0.1);
     }
 }
+
+/* Add this to your style.css file */
+.search-results-container {
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.search-results-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.search-results {
+    padding: 8px 12px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.search-result {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-result:last-child {
+    border-bottom: none;
+}
+
+.search-result a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-result a:hover {
+    text-decoration: underline;
+}
