@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NMore AI Chat</title>
     <link rel="stylesheet" href="css/style.css">
-
-     <!-- Firebase SDK -->
-     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
-
+    <!-- Mobile-specific stylesheet with highest priority -->
+    <link rel="stylesheet" href="css/mobile.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <header>
@@ -17,19 +17,19 @@
             <h1>NMore AI Chat</h1>
             <p class="subtitle">Connect with AI using the NMore API</p>
             <div class="toolbar">
-                <button id="new-chat-btn" class="btn">
+                <button id="new-chat-btn" class="btn btn-mobile-hide">
                     <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     New Chat
                 </button>
-                <button id="clear-btn" class="btn">
+                <button id="clear-btn" class="btn btn-mobile-hide">
                     <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                     Clear Chat
                 </button>
-                <button id="export-btn" class="btn">
+                <button id="export-btn" class="btn btn-mobile-hide">
                     <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
@@ -42,38 +42,32 @@
                         <option value="1">Gpt4o</option>
                     </select>
                 </div>
-                <div class="thinking-toggle">
+                <div class="thinking-toggle toggle-mobile-hide">
                     <span class="toggle-label">Show Thinking:</span>
                     <label class="toggle-switch">
                         <input type="checkbox" id="thinking-toggle" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-                <div class="thinking-toggle">
+                <div class="thinking-toggle toggle-mobile-hide">
                     <span class="toggle-label">Web Search:</span>
                     <label class="toggle-switch">
                         <input type="checkbox" id="websearch-toggle" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-                
             </div>
         </div>
     </header>
-
     <main class="container">
         <div class="chat-container">
             <div id="chat-messages" class="chat-messages">
-                <div class="message message-ai">
-                    <div class="message-header message-header-ai">AI Assistant</div>
-                    <div class="message-content">👋 Hello! I'm an AI assistant. How can I help you today?</div>
-                </div>
+                <!-- Removed intro message -->
             </div>
         </div>
-
         <div class="input-container">
             <div class="input-wrapper">
-                <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+                <textarea id="user-input" placeholder="Type /help for commands..." rows="1"></textarea>
             </div>
             <button id="send-btn" class="btn btn-primary">
                 <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,7 +77,6 @@
             </button>
         </div>
     </main>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/firebase-storage.js"></script>

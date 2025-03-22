@@ -1,0 +1,41 @@
+/* mobile.css - Specific styles for mobile devices */
+@media (max-width: 768px) {
+    /* Hide buttons and toggles completely */
+    .btn-mobile-hide,
+    .toggle-mobile-hide {
+        display: none !important;
+    }
+    
+    /* Make header more compact */
+    h1 {
+        font-size: 1.2rem !important;
+        margin-bottom: 0 !important;
+    }
+    
+    .subtitle {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    header {
+        padding: 0.3rem 0 !important;
+    }
+    
+    /* Center the model selector */
+    .model-selector {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        margin: 0.25rem 0 !important;
+    }
+    
+    .model-selector select {
+        width: 80% !important;
+    }
+    
+    /* Compact toolbar */
+    .toolbar {
+        margin-top: 0.25rem !important;
+        padding: 0 !important;
+    }
+}
