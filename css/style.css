@@ -580,35 +580,30 @@ code {
 
 
 
-/* Add this to your existing style.css file */
+/* Add this to your style.css file, after your existing media queries */
 @media (max-width: 768px) {
-    /* Hide toggle switches on mobile */
-    .thinking-toggle {
-      display: none;
+    /* Hide all buttons and toggle switches on mobile */
+    .toolbar .btn,
+    .thinking-toggle, 
+    .toolbar-item:has(.toggle-switch) {
+      display: none !important;
     }
     
-    /* Adjust toolbar to compensate for hidden elements */
-    .toolbar {
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    /* Make remaining buttons take more space */
-    .toolbar .btn {
-      flex: 1;
-      min-width: 80px;
-      padding: 0.5rem 0.5rem;
-    }
-    
-    /* Adjust model selector to be more prominent */
+    /* Keep only the model selector visible */
     .model-selector {
+      display: flex !important;
       width: 100%;
-      margin-top: 0.5rem;
-      text-align: center;
+      justify-content: center;
+      margin: 0.5rem 0;
     }
     
     .model-selector select {
-      width: 100%;
+      width: 80%;
       max-width: none;
+    }
+    
+    /* Simplify the toolbar */
+    .toolbar {
+      padding: 0.25rem 0;
     }
   }
